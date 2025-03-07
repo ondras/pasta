@@ -12,6 +12,7 @@ interface Options<T> {
 	heuristic(from: T, to: T): number;
 }
 
+/** The main pathfinding structure. It is simpler to just call the pasta() wrapper function. */
 export class Pasta<T> {
 	open: Map<T, Data<T>> = new Map<T, Data<T>>();
 	closed: Set<T> = new Set<T>();
@@ -27,6 +28,7 @@ export class Pasta<T> {
 		this.open.set(from, data);
 	}
 
+	/** Run the whole pathfinding process and return the path (if found). */
 	run(): T[] | undefined {
 		const { open } = this;
 
@@ -36,6 +38,7 @@ export class Pasta<T> {
 		}
 	}
 
+	/** Perform next pathfinding step. There is usually no need to call this, because typical consumers are only interested in the overall pathfinding result. */
 	next(): T[] | undefined {
 		const { open, closed, options, target } = this;
 
@@ -65,6 +68,7 @@ export class Pasta<T> {
 	}
 }
 
+/** A simple do-it-all wrapper that creates the pathfinding instance and runs it. */
 export function pasta<T>(from: T, to: T, options: Options<T>): T[] | undefined { return new Pasta(from, to, options).run(); }
 
 function createData<T>(node: T, g: number, h: number, prev?: Data<T>) {
