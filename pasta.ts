@@ -13,8 +13,8 @@ interface Options<T> {
 }
 
 export class Pasta<T> {
-	open = new Map<T, Data<T>>();
-	closed = new Set<T>();
+	open: Map<T, Data<T>> = new Map<T, Data<T>>();
+	closed: Set<T> = new Set<T>();
 	options: Options<T>;
 	target: T;
 
@@ -27,7 +27,7 @@ export class Pasta<T> {
 		this.open.set(from, data);
 	}
 
-	run() {
+	run(): T[] | undefined {
 		const { open } = this;
 
 		while (open.size > 0) {
@@ -36,14 +36,14 @@ export class Pasta<T> {
 		}
 	}
 
-	next() {
+	next(): T[] | undefined {
 		const { open, closed, options, target } = this;
 
 		// pick the node with lowest f
 		let current = findBest(open);
 		if (!current) { return; } // should not happen, as open set should not be empty
 
-		if (current.node == target) { return reversePath(current).map(data => data.node); }
+		if (current.node == target) { return reversePath<T>(current).map(data => data.node); }
 
 		open.delete(current.node);
 		closed.add(current.node);
@@ -65,7 +65,7 @@ export class Pasta<T> {
 	}
 }
 
-export function pasta<T>(from: T, to: T, options: Options<T>) { return new Pasta(from, to, options).run(); }
+export function pasta<T>(from: T, to: T, options: Options<T>): T[] | undefined { return new Pasta(from, to, options).run(); }
 
 function createData<T>(node: T, g: number, h: number, prev?: Data<T>) {
 	return {
