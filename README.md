@@ -1,5 +1,7 @@
 # Pasta: a pluggable A* implementation
 
+![](pasta-screenshot.png)
+
 [Wikipedia article about A*](https://en.wikipedia.org/wiki/A*_search_algorithm)
 
 ## Usage
