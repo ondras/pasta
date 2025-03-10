@@ -14,6 +14,8 @@ BYOC -- Bring Your Own Context. The algorithm is decoupled from the underlying (
 
 Individual nodes can be identified by any value -- just make sure that your `neighbors` implementation generates comparable identifiers.
 
+This algorithm is using an *h-based tie breaking* to reduce the number of visited nodes for same-cost paths. According to [Amit-the-A*-guru](https://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#breaking-ties), this is an idea by Steven van Dijk.
+
 ```ts
 import { pasta } from "https://cdn.jsdelivr.net/gh/ondras/pasta@main/pasta.ts";
 
