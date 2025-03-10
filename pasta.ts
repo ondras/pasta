@@ -47,6 +47,8 @@ export class Pasta<T> {
 
 		open.delete(current.node);
 		closed.add(current.node);
+		// console.log("processing", debug(current));
+		// console.log("open set", [...open.values()].map(debug));
 
 		for (let neighbor of options.neighbors(current.node)) {
 			if (closed.has(neighbor)) { continue; } // already processed, skip
@@ -64,6 +66,8 @@ export class Pasta<T> {
 		}
 	}
 }
+
+function debug<T>(item: Data<T>) { return `${item.node},g=${item.g},h=${item.h}`; }
 
 export function pasta<T>(from: T, to: T, options: Options<T>): T[] | undefined { return new Pasta(from, to, options).run(); }
 
@@ -89,13 +93,17 @@ function reversePath<T>(data: Data<T>) {
 }
 
 function findBest<T>(open: Map<T, Data<T>>) {
-	let minf = 1/0;
 	let best;
 	for (let data of open.values()) {
-		if (data.f < minf) {
-			best = data;
-			minf = data.f;
+		let better = false;
+		if (!best) {
+			better = true;
+		} else if (data.f < best.f) {
+			better = true;
+		} else if (data.f == best.f && data.h < best.h) {
+			better = true;
 		}
+		if (better) { best = data; }
 	}
 	return best;
 }
