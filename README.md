@@ -22,23 +22,22 @@ const N = 5; // our graph is a 5x5 grid
 function taxicab(x1, y1, x2, y2) { return Math.abs(x1-x2) + Math.abs(y1-y2); }
 
 function cost(from, to) {
-	let [x1, y1] = from.split(",").map(Number);
-	let [x2, y2] = to.split(",").map(Number);
-	return taxicab(x1, y1, x2, y2);
+  let [x1, y1] = from.split(",").map(Number);
+  let [x2, y2] = to.split(",").map(Number);
+  return taxicab(x1, y1, x2, y2);
 }
 
 function heuristic(from, to) {
-	return cost(from, to); // often, we can re-use the cost function as heuristic
+  return cost(from, to); // often, we can re-use the cost function as heuristic
 }
 
 function neighbors(node) {
-	let [x, y] = node.split(",").map(Number);
-	return [[-1,0],[1,0],[0,-1],[0,1]]
-			.map(([dx, dy]) => [x+dx, y+dy])
-			.filter(([x, y]) => x>=0 && y>=0 && x<N && y<N)
-			.map(xy => xy.join(","));
+  let [x, y] = node.split(",").map(Number);
+  return [[-1,0],[1,0],[0,-1],[0,1]]
+    .map(([dx, dy]) => [x+dx, y+dy])
+    .filter(([x, y]) => x>=0 && y>=0 && x<N && y<N)
+    .map(xy => xy.join(","));
 }
-
 
 let options = { cost, neighbors, heuristic };
 let path = pasta("0,0", "4,4", options);
