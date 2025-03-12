@@ -96,8 +96,8 @@ function reversePath<T>(data: Data<T>) {
 	return path.reverse();
 }
 
-function findBest<T>(open: Map<T, Data<T>>) {
-	let best;
+function findBest<T>(open: Map<T, Data<T>>): Data<T> | undefined {
+	let best: Data<T> | undefined;
 	for (let data of open.values()) {
 		let better = false;
 		if (!best) {
